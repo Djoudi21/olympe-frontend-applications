@@ -3,5 +3,86 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "actu-olympe": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "inlineStyle": true
+        }
+      },
+      "root": "projects/actu-olympe",
+      "sourceRoot": "projects/actu-olympe/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/actu-olympe",
+            "index": "projects/actu-olympe/src/index.html",
+            "browser": "projects/actu-olympe/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/actu-olympe/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/actu-olympe/public"
+              }
+            ],
+            "styles": [
+              "projects/actu-olympe/src/styles.css"
+            ],
+            "scripts": [],
+            "server": "projects/actu-olympe/src/main.server.ts",
+            "outputMode": "server",
+            "ssr": {
+              "entry": "projects/actu-olympe/src/server.ts"
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "actu-olympe:build:production"
+            },
+            "development": {
+              "buildTarget": "actu-olympe:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "test": {
+          "builder": "@analogjs/vitest-angular:test"
+        }
+      }
+    }
   }
 }
